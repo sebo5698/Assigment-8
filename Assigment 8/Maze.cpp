@@ -130,8 +130,34 @@ vector<int> Maze::findOpenAdjacentPaths(int x, int y){
 
 void Maze::convertMazeToAdjacencyListGraph(){
     // add all the vertices to the adjacency list
+for (int i = 0; i < n; i++) 
+{
+    for (int j = 0; j < n; j++) 
+    {
+        if ( maze[i][j] == 0) 
+        {
+            addVertex(findVertexNumFromPosition(i, j));
+            // cout << findVertexNumFromPosition(i, j) << " ";
+        }
+    }
+}
 
-    // add all edges to the adjacency list
+for (int i = 0; i < n; i++) 
+{
+    for (int j = 0; j < n; j++) 
+    {
+        if ( maze[i][j] == 0) 
+        {
+            auto neighbors = findOpenAdjacentPaths(i, j);
+            for ( auto neighbor : neighbors) 
+            {
+                addEdge(findVertexNumFromPosition(i, j), neighbor);
+                // cout << findVertexNumFromPosition(i, j) << " " << neighbor << endl;
+            }
+        }
+    }
+}
+// add all edges to the adjacency list
 }
 
 bool Maze::findPathThroughMaze(){
