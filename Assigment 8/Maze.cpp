@@ -12,45 +12,46 @@ Maze::Maze(int n){
 void Maze::addEdge(int v1, int v2){
     // add code here 
     int thesize= vertices.size();
-    for (int i = 0; i < thesize; i++)
+    int counter=0;
+    int checkcounter=0;
+    int secoundcounter=0;
+    while(counter<thesize)
     {
-        if (vertices[i]->num==v1)
+        if (vertices[counter]->num==v1)
         {
-            for (int n = 0; n < vertices[i]->adj.size(); n++)
+            while  (checkcounter < vertices[counter]->adj.size())
             {
-                if (vertices[i]->adj[n].v->num==v2)
+                if (vertices[counter]->adj[n].v->num==v2)
                 {
                     return;
                 }
-
+                checkcounter++;
                 
             }
-            for (int b = 0; b < thesize; b++)
+            while(secoundcounter < thesize)
             {
-                if (vertices[b]->num==v2 && i!=b)
+                if (vertices[secoundcounter]->num==v2 && counter != secoundcounter)
                 {
-                    if(vertices[i]!=NULL)
+                    if(vertices[counter]!=NULL)
                     {
                         adjVertex thev;
-                        thev.v=vertices[b];
-                        vertices[i]->adj.push_back(thev);
+                        thev.v=vertices[secoundcounter];
+                        vertices[counter]->adj.push_back(thev);
                     }
-                    if(vertices[b] != NULL)
+                    if(vertices[secoundcounter] != NULL)
                     {
                         adjVertex thev2;
-                        thev2.v =vertices[i];
-                        vertices[b]->adj.push_back(thev2);
+                        thev2.v =vertices[counter];
+                        vertices[secoundcounter]->adj.push_back(thev2);
                     }
 
                 }
+                secoundcounter++;
             }
             
             
         }
-        
-        
-        
-
+        counter++;
     }
     
 }
