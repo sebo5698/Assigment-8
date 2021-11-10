@@ -128,37 +128,28 @@ vector<int> Maze::findOpenAdjacentPaths(int x, int y){
     return neighbors;
 }
 
-void Maze::convertMazeToAdjacencyListGraph(){
-    // add all the vertices to the adjacency list
-for (int i = 0; i < n; i++) 
+void Maze::convertMazeToAdjacencyListGraph()
 {
-    for (int j = 0; j < n; j++) 
+    int position=0;
+    int position2=0;
+   for(int i = 0; i < n; i++)
     {
-        if ( maze[i][j] == 0) 
+        for(int b = 0; b < n; b++)
         {
-            addVertex(findVertexNumFromPosition(i, j));
-            // cout << findVertexNumFromPosition(i, j) << " ";
-        }
-    }
-}
-
-for (int i = 0; i < n; i++) 
-{
-    for (int j = 0; j < n; j++) 
-    {
-        if ( maze[i][j] == 0) 
-        {
-            auto neighbors = findOpenAdjacentPaths(i, j);
-            for ( auto neighbor : neighbors) 
+            if(maze[i][b] == 0)
             {
-                addEdge(findVertexNumFromPosition(i, j), neighbor);
-                // cout << findVertexNumFromPosition(i, j) << " " << neighbor << endl;
+                position=findVertexNumFromPosition(i, b);
+                addVertex(position);
+                for(int n = 0; n < findOpenAdjacentPaths(i, b).size(); n++)
+                {
+                    position2=findOpenAdjacentPaths(i, b)[n];
+                    addEdge(position, position2);
+                    addEdge(position2, position);
+                }
             }
         }
     }
-}
-// add all edges to the adjacency list
-}
+}  
 
 bool Maze::findPathThroughMaze(){
 
