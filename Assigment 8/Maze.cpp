@@ -15,6 +15,33 @@ void Maze::addEdge(int v1, int v2){
 
 void Maze::addVertex(int num){
     // add code here
+    bool exist=false;
+    for (int i = 0; i < vertices.size(); i++)
+    {
+        if (vertices[i]->num==num)
+        {
+            exist=true;
+            i=vertices.size();
+            break;
+        }
+        else
+        {
+            exist=true;
+        }
+        
+
+    }
+    if (exist==true)
+    {
+        return;    
+    }
+    else
+    {
+        vertex* racoon= new vertex;
+        racoon->num=num;
+        vertices.push_back(racoon);
+    }
+    
 }
 
 void Maze::displayEdges(){
