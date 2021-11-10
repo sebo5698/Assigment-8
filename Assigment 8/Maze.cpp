@@ -150,10 +150,41 @@ void Maze::convertMazeToAdjacencyListGraph()
         }
     }
 }  
+bool auxiliarPathdfs(vertex *traveler,int paths,vector<int>& highway)
+{
+    if (traveler->num==paths*paths-1)
+    {
+        return true;
+    }
+    traveler->visited=true;
+    for (int i = 0; i < traveler->adj.size(); i++)
+    {
+        if (traveler[i].visited==true)
+        {
+            break;
+        }
+        cout<<"Reached vertex: "<<traveler[i].num<<endl;
+        if (auxiliarPathdfs(traveler,paths,highway)==true)
+        {
+            highway.push_back(traveler[i].num);
+            cout<<"adding to path: "<<traveler[i].num<<endl;
+            return true;
+        }
+        cout<<"Backtracked to vertex: "<<traveler->num<<endl;
+        
+    }
+    return false;
+}
 
 bool Maze::findPathThroughMaze(){
 
-    // add code here
+    cout<<"starting at vertex: 0"<<endl;
+    if (auxiliarPathdfs(path,vertices[0],n))
+    {
+        path.push_back(0);
+        return true
+    }
+    
     return false; 
 }
 
