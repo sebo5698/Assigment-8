@@ -64,6 +64,9 @@ void Maze::addVertex(int num){
         if (vertices[i]->num==num)
         {
             exist=true;
+        }else
+        {
+            break;
         }
         
 
