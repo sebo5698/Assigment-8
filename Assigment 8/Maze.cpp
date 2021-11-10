@@ -150,7 +150,7 @@ void Maze::convertMazeToAdjacencyListGraph()
         }
     }
 }  
-bool auxiliarPathdfs(vertex *traveler,int paths,vector<int>& highway)
+bool auxiliarPathdfs(vertex *traveler,int paths,vector<int> &highway)
 {
     if (traveler->num==paths*paths-1)
     {
