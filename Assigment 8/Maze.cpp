@@ -21,12 +21,6 @@ void Maze::addVertex(int num){
         if (vertices[i]->num==num)
         {
             exist=true;
-            i=vertices.size();
-            break;
-        }
-        else
-        {
-            exist=true;
         }
         
 
@@ -45,7 +39,7 @@ void Maze::addVertex(int num){
 }
 
 void Maze::displayEdges(){
-    // add code here 
+    
 }
 
 int Maze::findVertexNumFromPosition(int x, int y){
