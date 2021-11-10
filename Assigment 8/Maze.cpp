@@ -11,6 +11,48 @@ Maze::Maze(int n){
 
 void Maze::addEdge(int v1, int v2){
     // add code here 
+    int thesize= vertices.size();
+    for (int i = 0; i < thesize; i++)
+    {
+        if (vertices[i]->num==v1)
+        {
+            for (int n = 0; n < vertices[i]->adj.size(); n++)
+            {
+                if (vertices[i]->adj[n].v->num==v2)
+                {
+                    break;
+                }
+
+                
+            }
+            for (int b = 0; b < thesize; b++)
+            {
+                if (vertices[b]->num==v2&& i!=b)
+                {
+                    if(vertices[i]!=NULL)
+                    {
+                        adjVertex thev;
+                        thev.v=vertices[i];
+                        vertices[b]->adj.push_back(thev);
+                    }
+                    if(vertices[b] != NULL)
+                    {
+                        adjVertex thev2;
+                        thev2.v =vertices[i];
+                        vertices[b]->adj.push_back(thev2);
+                    }
+
+                }
+            }
+            
+            
+        }
+        
+        
+        
+
+    }
+    
 }
 
 void Maze::addVertex(int num){
@@ -38,7 +80,8 @@ void Maze::addVertex(int num){
     
 }
 
-void Maze::displayEdges(){
+void Maze::displayEdges()
+{
     
 }
 
