@@ -150,27 +150,29 @@ void Maze::convertMazeToAdjacencyListGraph()
         }
     }
 }  
-bool auxiliarPathdfs(vertex *traveler,int paths,vector<int> &highway)
+bool auxiliarPathdfs(vertex* traveler,int paths,vector<int> &highway)
 {
-    if (traveler->num==paths*paths-1)
+    if (traveler->num == paths*paths-1)
     {
         return true;
     }
     traveler->visited=true;
     for (int i = 0; i < traveler->adj.size(); i++)
     {
-        if (traveler[i].visited==true)
+        if (traveler->adj[i].v->visited==true)
         {
-            break;
+            continue;
         }
-        cout<<"Reached vertex: "<<traveler[i].num<<endl;
-        if (auxiliarPathdfs(traveler,paths,highway)==true)
+        else
         {
-            highway.push_back(traveler[i].num);
-            cout<<"adding to path: "<<traveler[i].num<<endl;
-            return true;
+            cout<<"Reached vertex: "<<traveler->adj[i].v->num<<endl;
+            if (auxiliarPathdfs(traveler->adj[i].v,paths,highway)==true)
+            {
+                highway.insert(traveler->adj[i].v->num);
+                return true;
+            }
+            cout<<"Backtracked to vertex: "<<traveler->num<<endl;
         }
-        cout<<"Backtracked to vertex: "<<traveler->num<<endl;
         
     }
     return false;
@@ -178,11 +180,12 @@ bool auxiliarPathdfs(vertex *traveler,int paths,vector<int> &highway)
 
 bool Maze::findPathThroughMaze(){
 
-    cout<<"starting at vertex: 0"<<endl;
-    if (auxiliarPathdfs(path,vertices[0],n))
+    cout<<"Starting at vertex: 0"<<endl;
+    cot<<"Reached vertex: 0"<<endl;
+    if (auxiliarPathdfs(vertices[0],n,path)==true)
     {
-        path.push_back(0);
-        return true
+        path.pop_back(0);
+        return true;
     }
     
     return false; 
