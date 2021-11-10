@@ -20,20 +20,20 @@ void Maze::addEdge(int v1, int v2){
             {
                 if (vertices[i]->adj[n].v->num==v2)
                 {
-                    break;
+                    return;
                 }
 
                 
             }
             for (int b = 0; b < thesize; b++)
             {
-                if (vertices[b]->num==v2&& i!=b)
+                if (vertices[b]->num==v2 && i!=b)
                 {
                     if(vertices[i]!=NULL)
                     {
                         adjVertex thev;
-                        thev.v=vertices[i];
-                        vertices[b]->adj.push_back(thev);
+                        thev.v=vertices[b];
+                        vertices[i]->adj.push_back(thev);
                     }
                     if(vertices[b] != NULL)
                     {
