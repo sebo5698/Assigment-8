@@ -7,6 +7,7 @@ using namespace std;
 
 Maze::Maze(int n){
     this->n = n; 
+    maze = new int*[n];
 }
 
 void Maze::addEdge(int v1, int v2){
@@ -86,25 +87,64 @@ void Maze::addVertex(int num){
 
 void Maze::displayEdges()
 {
+    for (int i = 0; i < vertices.size(); i++)
+    {
+        cout<<vertices[i]->num<<" --> "<<endl;
+        for (int b = 0; i < vertices[i]->adj.size(); b++)
+        {
+            cout<<vertices[i]->adj[b].v->num<<" ";
+        }
+        cout<<endl;
+        
+    }
     
 }
 
 int Maze::findVertexNumFromPosition(int x, int y){
-    // add code here 
+    for (int i = 0; i < vertices.size(); i++)
+    {
+        cout<<vertices[i]->num<<" --> ";
+        for (int b = 0; i < vertices[i]->adj.size(); i++)
+        {
+            cout<<vertices[i]->adj[b].v->num<<" ";
+        }
+        cout<<endl;
+    }
+     
     return 0; 
 }
 
 // Creates a default maze of all 1s of size n x n, except for positions (0,0) and (n-1, n-1)
-void Maze::createDefaultMaze(){
-    // add code here
+void Maze::createDefaultMaze()
+{
+    for (int i = 0; i < n; i++)
+    {
+        maze[i] = new int[n];
+        for (int b = 0; b < n; b++) 
+        {
+            maze[i][b] = 1;
+        }
+    }
+    maze[0][0] = 0;
+    maze[n-1][n-1] = 0;
 }
 
 void Maze::createPath(int i, int j){
-    // add code here
+    maze[i,j]=0;
 }
 
 void Maze::printMaze(){
-    // add code here
+    for (int i = 0; i < n; i++)
+    {
+        cout<<"| ";
+        for (int b = 0; b < n; b++)
+        {
+            cout<<maze[i][b]<<" | ";
+        }
+        cout<<endl;
+        
+    }
+    
 }
 
 vector<int> Maze::findOpenAdjacentPaths(int x, int y){
@@ -168,7 +208,7 @@ bool auxiliarPathdfs(vertex* traveler,int paths,vector<int> &highway)
             cout<<"Reached vertex: "<<traveler->adj[i].v->num<<endl;
             if (auxiliarPathdfs(traveler->adj[i].v,paths,highway)==true)
             {
-                highway.insert(traveler->adj[i].v->num);
+                highway.insert(highway.begin(),traveler->adj[i].v->num);
                 return true;
             }
             cout<<"Backtracked to vertex: "<<traveler->num<<endl;
@@ -181,10 +221,10 @@ bool auxiliarPathdfs(vertex* traveler,int paths,vector<int> &highway)
 bool Maze::findPathThroughMaze(){
 
     cout<<"Starting at vertex: 0"<<endl;
-    cot<<"Reached vertex: 0"<<endl;
+    cout<<"Reached vertex: 0"<<endl;
     if (auxiliarPathdfs(vertices[0],n,path)==true)
     {
-        path.pop_back(0);
+        path.insert(path.begin(),0);
         return true;
     }
     
