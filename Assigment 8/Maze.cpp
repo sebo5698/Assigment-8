@@ -10,51 +10,39 @@ Maze::Maze(int n){
     maze = new int*[n];
 }
 
-void Maze::addEdge(int v1, int v2){
-    // add code here 
-    int thesize= vertices.size();
-    int counter=0;
-    int checkcounter=0;
-    int secoundcounter=0;
-    while(counter<thesize)
+void Maze::addEdge(int v1, int v2)
+{
+    int thesize=vertices.size();
+    bool isthere=false;
+    for(int i = 0; i < thesize; i++)
     {
-        if (vertices[counter]->num==v1)
+        if(vertices[i]->num==v1)
         {
-            while  (checkcounter < vertices[counter]->adj.size())
+            for(int b=0; b < thesize; b++)
             {
-                if (vertices[counter]->adj[n].v->num==v2)
+                if(vertices[b]->num==v2 && i!=b)
                 {
-                    return;
-                }
-                checkcounter++;
-                
-            }
-            while(secoundcounter < thesize)
-            {
-                if (vertices[secoundcounter]->num==v2 && counter != secoundcounter)
-                {
-                    if(vertices[counter]!=NULL)
+                    isthere=false;
+                    for(int z=0; z < vertices[i]->adj.size(); z++)
                     {
-                        adjVertex thev;
-                        thev.v=vertices[secoundcounter];
-                        vertices[counter]->adj.push_back(thev);
+                        if(vertices[i]->adj[z].v->num==v2)
+                        {
+                            isthere=true;
+                        }
                     }
-                    if(vertices[secoundcounter] != NULL)
+                    if(isthere==false)
                     {
-                        adjVertex thev2;
-                        thev2.v =vertices[counter];
-                        vertices[secoundcounter]->adj.push_back(thev2);
+                        adjVertex av;
+                        av.v=vertices[b];
+                        vertices[i]->adj.push_back(av);
+                        adjVertex av2;
+                        av2.v=vertices[i];
+                        vertices[b]->adj.push_back(av2);
                     }
-
                 }
-                secoundcounter++;
             }
-            
-            
         }
-        counter++;
     }
-    
 }
 
 void Maze::addVertex(int num){
@@ -65,18 +53,9 @@ void Maze::addVertex(int num){
         if (vertices[i]->num==num)
         {
             exist=true;
-        }else
-        {
-            break;
         }
-        
-
     }
-    if (exist==true)
-    {
-        return;    
-    }
-    else
+    if(exist==false)    
     {
         vertex* racoon= new vertex;
         racoon->num=num;
@@ -85,33 +64,25 @@ void Maze::addVertex(int num){
     
 }
 
+
 void Maze::displayEdges()
 {
+    cout<<"Adjacency List Graph: "<<endl;
     for (int i = 0; i < vertices.size(); i++)
     {
-        cout<<vertices[i]->num<<" --> "<<endl;
-        for (int b = 0; i < vertices[i]->adj.size(); b++)
+        cout<<vertices[i]->num<<" --> ";
+        for (int b = 0; b < vertices[i]->adj.size(); b++)
         {
             cout<<vertices[i]->adj[b].v->num<<" ";
         }
         cout<<endl;
         
     }
-    
 }
 
-int Maze::findVertexNumFromPosition(int x, int y){
-    for (int i = 0; i < vertices.size(); i++)
-    {
-        cout<<vertices[i]->num<<" --> ";
-        for (int b = 0; i < vertices[i]->adj.size(); i++)
-        {
-            cout<<vertices[i]->adj[b].v->num<<" ";
-        }
-        cout<<endl;
-    }
-     
-    return 0; 
+int Maze::findVertexNumFromPosition(int x, int y)
+{
+    return y + n * x;
 }
 
 // Creates a default maze of all 1s of size n x n, except for positions (0,0) and (n-1, n-1)
@@ -130,10 +101,12 @@ void Maze::createDefaultMaze()
 }
 
 void Maze::createPath(int i, int j){
-    maze[i,j]=0;
+    maze[i][j]=0;
 }
 
 void Maze::printMaze(){
+    
+    cout<<"Maze of size "<<"("<<n<<"x"<<n<<")"<<endl;
     for (int i = 0; i < n; i++)
     {
         cout<<"| ";
@@ -180,16 +153,17 @@ void Maze::convertMazeToAdjacencyListGraph()
             {
                 position=findVertexNumFromPosition(i, b);
                 addVertex(position);
-                for(int n = 0; n < findOpenAdjacentPaths(i, b).size(); n++)
+                for(int z = 0; z < findOpenAdjacentPaths(i, b).size(); z++)
                 {
-                    position2=findOpenAdjacentPaths(i, b)[n];
+                    position2=findOpenAdjacentPaths(i, b)[z];
                     addEdge(position, position2);
                     addEdge(position2, position);
                 }
             }
         }
     }
-}  
+} 
+
 bool auxiliarPathdfs(vertex* traveler,int paths,vector<int> &highway)
 {
     if (traveler->num == paths*paths-1)
@@ -232,9 +206,16 @@ bool Maze::findPathThroughMaze(){
 }
 
 
-bool Maze::checkIfValidPath(){
-    // add code here
-    return false; 
+bool Maze::checkIfValidPath()
+{
+    if(path.front() == 0 && path.back() == n*n - 1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 Maze::~Maze(){

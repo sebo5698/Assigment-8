@@ -6,7 +6,7 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-    Maze m(5);
+    Maze m(6);
     m.createDefaultMaze();
     m.createPath(0, 3); 
     m.createPath(1, 1); 
