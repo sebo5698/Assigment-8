@@ -5,7 +5,8 @@
 
 using namespace std;
 
-Maze::Maze(int n){
+Maze::Maze(int n)
+{
     this->n = n; 
     maze = new int*[n];
 }
